@@ -1,0 +1,6 @@
+{
+  "name": "Suva Dental Care",
+  "description": "Suva Dental Care provides advanced dental treatments including root canal therapy, teeth whitening, smile designing, braces, cosmetic dentistry, preventive care, and complete oral healthcare services in Birshibpur, Uluberia, Howrah.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
