@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "motion/react";
 import { Menu, X, Phone, Calendar, Moon, Sun, Shield } from "lucide-react";
 import { CLINIC_INFO } from "../data";
@@ -19,6 +19,31 @@ export default function Header({ darkMode, setDarkMode, openAppointmentModal }: 
     damping: 30,
     restDelta: 0.001
   });
+
+  const handleAnchorScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    if (targetId === "home") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+      window.history.pushState(null, "", href);
+      return;
+    }
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const headerOffset = 95; // height of fixed navigation header + gap
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      window.history.pushState(null, "", href);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -67,6 +92,7 @@ export default function Header({ darkMode, setDarkMode, openAppointmentModal }: 
           <a
             id="logo-brand-anchor"
             href="#home"
+            onClick={(e) => handleAnchorScroll(e, "#home")}
             className="flex items-center gap-2 group focus:outline-none"
           >
             <div className="p-2 rounded-xl bg-dental-blue text-white shadow-md group-hover:scale-105 transition-transform">
@@ -89,6 +115,7 @@ export default function Header({ darkMode, setDarkMode, openAppointmentModal }: 
                 <li key={item.name}>
                   <a
                     href={item.href}
+                    onClick={(e) => handleAnchorScroll(e, item.href)}
                     className="font-sans font-medium text-sm text-slate-100 hover:text-sky-blue transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-sky-blue hover:after:w-full after:transition-all focus:outline-none"
                   >
                     {item.name}
@@ -173,7 +200,10 @@ export default function Header({ darkMode, setDarkMode, openAppointmentModal }: 
                   <li key={item.name}>
                     <a
                       href={item.href}
-                      onClick={() => setIsOpen(false)}
+                      onClick={(e) => {
+                        setIsOpen(false);
+                        handleAnchorScroll(e, item.href);
+                      }}
                       className="block px-4 py-2.5 rounded-lg text-base font-semibold text-slate-100 hover:bg-white/5 hover:text-sky-blue transition-all"
                     >
                       {item.name}

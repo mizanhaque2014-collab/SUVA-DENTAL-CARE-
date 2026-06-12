@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { Phone, MessageSquare, ArrowUp } from "lucide-react";
+import { Phone, MessageSquare, ArrowUp, Calendar } from "lucide-react";
 import { CLINIC_INFO } from "../data";
 
-export default function FloatingControls() {
+interface FloatingControlsProps {
+  openAppointmentModal: () => void;
+}
+
+export default function FloatingControls({ openAppointmentModal }: FloatingControlsProps) {
   const [showScroll, setShowScroll] = useState(false);
 
   useEffect(() => {
@@ -127,6 +131,49 @@ export default function FloatingControls() {
           {/* Hover helper text */}
           <span className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-emerald-950 text-white text-[10px] font-bold uppercase rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md pointer-events-none">
             Direct WhatsApp Chat
+          </span>
+        </motion.div>
+
+        {/* Book Appointment Floating Action */}
+        <motion.div
+          animate={{
+            y: [0, -6, 0]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 0.6
+          }}
+          className="relative flex items-center group"
+        >
+          {/* Pulsing ring */}
+          <div className="absolute -inset-2.5 bg-sky-500 rounded-full opacity-20 animate-pulse-slow pointer-events-none" />
+          <div className="absolute -inset-1 bg-sky-400 rounded-full opacity-40 blur-xs animate-ping pointer-events-none" style={{ animationDuration: '3.1s' }} />
+
+          {/* Persistent premium soft reminder pill */}
+          <motion.div
+            initial={{ opacity: 0, x: 20, scale: 0.9 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="absolute right-18 mr-2 px-3 py-1.5 rounded-xl bg-slate-900/90 dark:bg-slate-800 backdrop-blur-md border border-sky-500/30 text-white text-[11px] font-bold tracking-wide shadow-xl flex items-center gap-1.5 pointer-events-none whitespace-nowrap"
+          >
+            <span className="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse" />
+            <span>Book Appointment</span>
+          </motion.div>
+
+          <button
+            id="floating-book-appointment-btn"
+            onClick={openAppointmentModal}
+            className="relative flex items-center justify-center w-15 h-15 bg-gradient-to-tr from-dental-blue to-sky-500 hover:brightness-110 active:scale-95 text-white rounded-full shadow-xl shadow-sky-500/25 border border-white/10 cursor-pointer transition-all duration-300"
+            title="Book Online Appointment"
+          >
+            <Calendar className="w-6.5 h-6.5" />
+          </button>
+
+          {/* Hover helper text */}
+          <span className="absolute bottom-full right-0 mb-2 px-3 py-1 bg-slate-950 text-white text-[10px] font-bold uppercase rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-md pointer-events-none">
+            Online Appointments
           </span>
         </motion.div>
 

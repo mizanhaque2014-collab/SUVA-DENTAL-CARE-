@@ -1,3 +1,4 @@
+import React from "react";
 import { ShieldCheck, Phone, Mail, MapPin, Facebook, Instagram, Twitter, Linkedin, Heart, Shield } from "lucide-react";
 import { CLINIC_INFO, SERVICES } from "../data";
 
@@ -19,6 +20,31 @@ export default function Footer({ openAppointmentModal }: FooterProps) {
 
   // Top 5 services for footer links
   const footerServices = SERVICES.slice(0, 5);
+
+  const handleAnchorScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+    const targetId = href.replace("#", "");
+    if (targetId === "home") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+      window.history.pushState(null, "", href);
+      return;
+    }
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      const headerOffset = 95; // height of fixed navigation header + gap
+      const elementPosition = targetElement.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+      window.history.pushState(null, "", href);
+    }
+  };
 
   return (
     <footer className="bg-slate-950 text-slate-400 font-sans border-t border-slate-900 overflow-hidden">
@@ -52,7 +78,11 @@ export default function Footer({ openAppointmentModal }: FooterProps) {
           
           {/* Logo & Description */}
           <div className="md:col-span-4 space-y-5">
-            <a href="#home" className="flex items-center gap-2 group">
+            <a
+              href="#home"
+              onClick={(e) => handleAnchorScroll(e, "#home")}
+              className="flex items-center gap-2 group"
+            >
               <div className="p-2 rounded-xl bg-dental-blue text-white shadow-md">
                 <Shield className="w-6 h-6 stroke-[2.5]" />
               </div>
@@ -102,7 +132,8 @@ export default function Footer({ openAppointmentModal }: FooterProps) {
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    className="hover:text-dental-blue hover:underline transition-colors"
+                    onClick={(e) => handleAnchorScroll(e, link.href)}
+                    className="hover:text-dental-blue hover:underline transition-colors animate-fade-in"
                   >
                     {link.name}
                   </a>
@@ -121,6 +152,7 @@ export default function Footer({ openAppointmentModal }: FooterProps) {
                 <li key={service.id}>
                   <a
                     href="#services"
+                    onClick={(e) => handleAnchorScroll(e, "#services")}
                     className="hover:text-dental-blue transition-colors block truncate"
                   >
                     {service.title}
@@ -128,7 +160,11 @@ export default function Footer({ openAppointmentModal }: FooterProps) {
                 </li>
               ))}
               <li>
-                <a href="#services" className="text-dental-blue hover:underline font-bold text-xs">
+                <a
+                  href="#services"
+                  onClick={(e) => handleAnchorScroll(e, "#services")}
+                  className="text-dental-blue hover:underline font-bold text-xs"
+                >
                   + See all 15 services list
                 </a>
               </li>

@@ -95,7 +95,7 @@ export default function App() {
       <Footer openAppointmentModal={() => openModal()} />
 
       {/* 15. Contextual Action widgets (WhatsApp, Call, Scroll To Top) */}
-      <FloatingControls />
+      <FloatingControls openAppointmentModal={() => openModal()} />
 
       {/* 16. Backdrop interactive Booking form Modal */}
       <AnimatePresence>
