@@ -15,6 +15,7 @@ import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import FloatingControls from "./components/FloatingControls";
 import Loader from "./components/Loader";
+import FAQ from "./components/FAQ";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -82,7 +83,10 @@ export default function App() {
       {/* 10. Auto sliding testimonials carousel */}
       <Testimonials />
 
-      {/* 11. Custom virtual consulting guide section */}
+      {/* 11. Frequently Asked Questions */}
+      <FAQ />
+
+      {/* 12. Custom virtual consulting guide section */}
       <Consultation openAppointmentModal={() => openModal()} />
 
       {/* 12. Inline Quick appointment booking scheduler form */}

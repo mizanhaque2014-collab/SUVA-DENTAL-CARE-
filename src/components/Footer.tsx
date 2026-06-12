@@ -9,13 +9,13 @@ interface FooterProps {
 export default function Footer({ openAppointmentModal }: FooterProps) {
   const quickLinks = [
     { name: "Home", href: "#home" },
-    { name: "About Doctor", href: "#about-doctor" },
+    { name: "About Us", href: "#about-doctor" },
     { name: "Why Choose Us", href: "#why-choose-us" },
-    { name: "Speciality Services", href: "#services" },
+    { name: "Services", href: "#services" },
     { name: "Treatments Showcase", href: "#treatments" },
     { name: "Before & After", href: "#gallery" },
     { name: "FAQs", href: "#faq" },
-    { name: "Locate Us", href: "#contact" }
+    { name: "Contact Us", href: "#contact" }
   ];
 
   // Top 5 services for footer links
@@ -34,15 +34,17 @@ export default function Footer({ openAppointmentModal }: FooterProps) {
     }
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      const headerOffset = 95; // height of fixed navigation header + gap
-      const elementPosition = targetElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      setTimeout(() => {
+        const headerOffset = 95; // height of fixed navigation header + gap
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      window.history.pushState(null, "", href);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+        window.history.pushState(null, "", href);
+      }, 100);
     }
   };
 

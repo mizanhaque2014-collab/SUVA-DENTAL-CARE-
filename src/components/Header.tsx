@@ -33,15 +33,19 @@ export default function Header({ darkMode, setDarkMode, openAppointmentModal }: 
     }
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      const headerOffset = 95; // height of fixed navigation header + gap
-      const elementPosition = targetElement.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      // A short delay to allow any mobile drawer state to start collapsing
+      // before element coordinates are selected, preventing layout shift offsets
+      setTimeout(() => {
+        const headerOffset = 95; // height of fixed navigation header + gap
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth"
-      });
-      window.history.pushState(null, "", href);
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+        window.history.pushState(null, "", href);
+      }, 100);
     }
   };
 
@@ -59,14 +63,14 @@ export default function Header({ darkMode, setDarkMode, openAppointmentModal }: 
 
   const navItems = [
     { name: "Home", href: "#home" },
-    { name: "About Doctor", href: "#about-doctor" },
+    { name: "About Us", href: "#about-doctor" },
     { name: "Why Choose Us", href: "#why-choose-us" },
     { name: "Services", href: "#services" },
     { name: "Treatments", href: "#treatments" },
     { name: "Gallery", href: "#gallery" },
     { name: "Testimonials", href: "#testimonials" },
     { name: "FAQ", href: "#faq" },
-    { name: "Contact", href: "#contact" }
+    { name: "Contact Us", href: "#contact" }
   ];
 
   return (
